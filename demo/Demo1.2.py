@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
+from tensorflow.keras.layers import LSTM as lstm
 
 def map(value, fmin, fmax, tmin, tmax):
     return (value - fmin) / (fmax - fmin) * (tmax - tmin) + tmin
