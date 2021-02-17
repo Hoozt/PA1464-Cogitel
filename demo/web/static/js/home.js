@@ -1,6 +1,5 @@
 const testDataInput = document.getElementById("testDataInput");
 const resultSpan = document.getElementById("result");
-console.log(resultSpan);
 
 const uploadData = () => {
     console.log("Function uploadData() is not yet implemented.");
@@ -15,12 +14,12 @@ const testData = () => {
             }).then(response => {
                 const status = response.status
                 if (status === "ok") {
-                    const value = response.value;
-                    const valueStatus = response.valueStatus;
-                    resultSpan.innerText = `The value ${value} is considered ${valueStatus}.`
+                    const confidence = response.confidence;
+                    const result = response.result;
+                    resultSpan.innerText = `The value ${value} is considered ${result} with confidence ${confidence}.`
                 }
                 else {
-                    resultSpan.innerText = `Illegal input`
+                    resultSpan.innerText = response.message;
                 }
             });
     }

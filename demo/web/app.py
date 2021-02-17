@@ -13,15 +13,5 @@ app = Flask(__name__)
 def home():
     return render_template("home.html")
 
-@app.route('/api/predict/<value>')
-def api_predict(value):
-    try:
-        value = float(value)
-        valueStatus = "ok" if 22 < value < 28 else "not ok"
-        status = "ok"
-    except :
-        status = "error"
-        value = ""
-        valueStatus = ""
-    return jsonify({ "status": status, "value": value, "valueStatus": valueStatus})
-app.run()
+def get_app():
+    return app
