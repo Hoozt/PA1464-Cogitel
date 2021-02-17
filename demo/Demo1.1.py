@@ -32,23 +32,29 @@ model.compile(
     metrics=['acc']
 )
 
-s = np.random.normal(loc=25, scale=2.2, size=100000)
-X, Y = create_data(s, 22, 28)
+min_ok = 22
+max_ok = 28
+
+loc = 25
+scale = 2.2
+
+s = np.random.normal(loc=loc, scale=scale, size=100000)
+X, Y = create_data(s, min_ok, max_ok)
 
 model.fit([X], Y, batch_size=64, validation_split=0.2, epochs=25)
 
 import random
-tests = np.random.normal(22, 2.2, 100)
+tests = np.random.normal(loc, scale, 100)
 for test in tests:
-    t = np.array([[map(test, 22, 28, 0, 1)]])
+    t = np.array([[map(test, min_ok, max_ok, 0, 1)]])
     pred = model.predict(t)
 
     p_ok = pred[0][0]
     p_no = pred[0][1]
     ok = p_ok > p_no
-    act = 22 <= test <= 28
+    act = min_ok <= test <= max_ok
 
-    print(f'Testing on {test:.2f} ({t[0][0]:.2f}): {p_ok:.2f} / {p_no:.2f} => {"Right" if ok == act else "Wrong" }')
+    print(f'Testing on {test:.2f} ({t[0][0]:2.2f}): {p_ok:.2f} / {p_no:.2f} => {"Right" if ok == act else "Wrong" }')
 
 # plt.hist(s, 200)
 # plt.show()
