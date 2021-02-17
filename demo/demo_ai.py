@@ -60,3 +60,6 @@ def train_ai(model, min_ok, max_ok, loc, scale, data_size=100_000, batch_size=64
     s = np.random.normal(loc=loc, scale=scale, size=data_size)
     X, Y = create_data(s, min_ok, max_ok)
     model.fit([X], Y, batch_size=batch_size, validation_split=validation_split, epochs=epochs)
+
+def load_ai(model, path):
+    model.load_weights(path)
