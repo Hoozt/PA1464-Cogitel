@@ -31,13 +31,16 @@ if os.path.exists(AI_ACT_WEIGHTS_PATH):
     print(f'Found previous weights, loading weights...')
     load_ai(ai_model, AI_ACT_WEIGHTS_PATH)
 else:
-    print(f'Found no previous weights, retraining model')
+    print(f'Found no previous weights, retraining model...')
     try:
         train_ai(ai_model, AI_MIN_OK, AI_MAX_OK, AI_LOC, AI_SCL, batch_size=32, epochs=25)
         ai_model.save_weights(AI_PRE_WEIGHTS_PATH)
         print(f'Saved weights at "{AI_PRE_WEIGHTS_PATH}". Remember to rename to "{AI_ACT_WEIGHTS_PATH}" to load them for next start.')
     except KeyboardInterrupt:
+        print('Received keyboard interrupt')
         exit_handler()
+    except Exception as e:
+        print(str(e))
 
 @app.route('/api/predict/<value>')
 def api_predict(value):
